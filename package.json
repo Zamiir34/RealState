@@ -1,0 +1,15 @@
+{
+  "name": "realp-estate",
+  "version": "1.0.0",
+  "description": "Real Estate Management System - MERN Stack",
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install --legacy-peer-deps",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "seed": "cd backend && npm run seed",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": ["real-estate", "mern", "mongodb", "react", "express"],
+  "license": "ISC"
+}
