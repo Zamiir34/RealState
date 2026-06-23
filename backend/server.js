@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('./middleware/mongoSanitize');
 const cookieParser = require('cookie-parser');
-const corsOptions = require('./config/cors');
+const { corsMiddleware, corsOptions } = require('./config/cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const { errorHandler } = require('./middleware/errorHandler');
@@ -24,7 +24,8 @@ connectDB();
 const app = express();
 
 app.set('trust proxy', 1);
-app.use(helmet());
+app.use(corsMiddleware);
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -43,12 +44,14 @@ if (process.env.NODE_ENV === 'production') {
     max: 200,
     standardHeaders: true,
     legacyHeaders: false,
+    skip: (req) => req.method === 'OPTIONS',
     message: { success: false, message: 'Too many requests, please try again later' },
   });
 
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 30,
+    skip: (req) => req.method === 'OPTIONS',
     message: { success: false, message: 'Too many auth attempts, please try again later' },
   });
 

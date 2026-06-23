@@ -1,3 +1,5 @@
+const { setCorsHeaders } = require('../config/cors');
+
 class ErrorResponse extends Error {
   constructor(message, statusCode) {
     super(message);
@@ -6,6 +8,8 @@ class ErrorResponse extends Error {
 }
 
 const errorHandler = (err, req, res, next) => {
+  setCorsHeaders(req, res);
+
   let error = { ...err };
   error.message = err.message;
 
