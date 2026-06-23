@@ -15,3 +15,5 @@ services:
         value: 7d
       - key: JWT_COOKIE_EXPIRE
         value: "7"
+      # Set MONGODB_URI in Render dashboard (Secret) — must start with mongodb+srv://
+      # Example: mongodb+srv://user:pass@cluster.mongodb.net/realp?retryWrites=true&w=majority
