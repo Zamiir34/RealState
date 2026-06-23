@@ -155,26 +155,36 @@ npm run dev
 
 ## Deployment
 
-### Backend (Railway / Render / Heroku)
+### Live URLs
 
-1. Set environment variables from `.env.example`
-2. Set `NODE_ENV=production`
-3. Start command: `npm start`
+| Service | URL |
+|---------|-----|
+| Backend (Render) | https://realstate-v6vj.onrender.com |
+| API base | https://realstate-v6vj.onrender.com/api |
+| Frontend (Vercel) | Set `CLIENT_URL` on Render to your Vercel URL |
 
-### Frontend (Netlify / Vercel)
+### Backend (Render)
 
-1. Build command: `npm run build`
-2. Publish directory: `dist`
-3. Set `VITE_API_URL` to your production API URL
+1. Set environment variables from `backend/.env.example`
+2. Required: `MONGODB_URI`, `JWT_SECRET`, `NODE_ENV=production`
+3. Set `CLIENT_URL` to your **Vercel frontend URL** (for CORS), e.g. `https://your-app.vercel.app`
+4. Start command: `npm start`
+
+### Frontend (Vercel)
+
+1. Root directory: `frontend`
+2. Build command: `npm run build`
+3. Output directory: `dist`
+4. `VITE_API_URL` is set in `frontend/.env.production` for production builds
 
 ### MongoDB Atlas
 
 1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas)
-2. Set `MONGODB_URI` in backend environment variables
+2. Set `MONGODB_URI` in Render environment variables
 
 ### Netlify Full-Stack
 
-Update `netlify.toml` redirect to point `/api/*` to your deployed backend URL.
+`netlify.toml` redirects `/api/*` to the Render backend.
 
 ## Security
 
