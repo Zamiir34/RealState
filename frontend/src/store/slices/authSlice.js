@@ -9,7 +9,9 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
   } catch (err) {
     const msg = err.response?.status === 429
       ? 'Too many attempts. Please wait a moment and try again.'
-      : err.response?.data?.message || 'Login failed';
+      : !err.response
+        ? 'Cannot reach the server. The backend may be starting up — wait 30 seconds and try again.'
+        : err.response?.data?.message || 'Login failed';
     return rejectWithValue(msg);
   }
 });

@@ -8,11 +8,12 @@ const createNotification = require('../utils/createNotification');
 
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
+  const cookieDays = parseInt(process.env.JWT_COOKIE_EXPIRE, 10) || 7;
   const options = {
-    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + cookieDays * 24 * 60 * 60 * 1000),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
   };
   res.status(statusCode).cookie('token', token, options).json({
     success: true,
